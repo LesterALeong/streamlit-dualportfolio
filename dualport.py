@@ -31,6 +31,7 @@ def download_data(tickers, start_date, end_date):
     return price_data
 
 data = download_data(tickers, start_date, end_date)
+data.dropna(inplace=True)
 
 # Calculate returns and covariance
 mu = expected_returns.mean_historical_return(data)
