@@ -68,13 +68,15 @@ risk_parity_weights = {tickers[i]: risk_parity_weights[i] for i in range(n)}
 # Plotting
 fig, axs = plt.subplots(2, 2, figsize=(10,10))
 
-axs[0, 0].pie(cleaned_weights.values(), labels=cleaned_weights.keys(), autopct='%1.1f%%')
+cleaned_weights_filtered = {k: v for k, v in cleaned_weights.items() if v > 0.01}
+axs[0, 0].pie(cleaned_weights_filtered.values(), labels=cleaned_weights_filtered.keys(), autopct='%1.1f%%')
 axs[0, 0].set_title('Efficient Frontier Portfolio Composition')
 
 axs[0, 1].plot((1 + (data.pct_change() * list(cleaned_weights.values())).sum(axis=1)).cumprod())
 axs[0, 1].set_title('Efficient Frontier Portfolio Returns')
 
-axs[1, 0].pie(risk_parity_weights.values(), labels=risk_parity_weights.keys(), autopct='%1.1f%%')
+risk_parity_weights_filtered = {k: v for k, v in risk_parity_weights.items() if v > 0.01}
+axs[1, 0].pie(risk_parity_weights_filtered.values(), labels=risk_parity_weights_filtered.keys(), autopct='%1.1f%%')
 axs[1, 0].set_title('Risk Parity Portfolio Composition')
 
 axs[1, 1].plot((1 + (data.pct_change() * list(risk_parity_weights.values())).sum(axis=1)).cumprod())
@@ -82,3 +84,4 @@ axs[1, 1].set_title('Risk Parity Portfolio Returns')
 
 plt.tight_layout()
 st.pyplot(fig)
+
