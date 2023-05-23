@@ -16,7 +16,8 @@ from datetime import datetime, timedelta
 st.title('Portfolio Optimization')
 
 # User input for tickers
-tickers = st.text_input('Enter your stock tickers separated by comma:').split(',')
+tickers = st.text_input('Enter your stock tickers separated by comma:', value='AAPL,GOOGL,MSFT').split(',')
+
 
 # Removing leading and trailing white spaces in each ticker
 tickers = [ticker.strip() for ticker in tickers]
